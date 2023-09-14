@@ -3,13 +3,13 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
 
     steps:
       # Caches and restores the bazelisk download directory, the bazel build directory.
       - name: Cache bazel
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v3
         env:
           cache-name: bazel-cache
         with:
@@ -17,7 +17,29 @@ jobs:
             ~/.cache/bazelisk
             ~/.cache/bazel
           key: ${{ runner.os }}-${{ env.cache-name }}
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      # build
+      - name: Build Code
+        run: bazel build //main:hello-world
+      # - name: Run tests
+      #   run: bazel test //...
+
+  build-ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Caches and restores the bazelisk download directory, the bazel build directory.
+      - name: Cache bazel
+        uses: actions/cache@v3
+        env:
+          cache-name: bazel-cache
+        with:
+          path: |
+            ~/.cache/bazelisk
+            ~/.cache/bazel
+          key: ${{ runner.os }}-${{ env.cache-name }}
+      - uses: actions/checkout@v3
 
       # build
       - name: Build Code
