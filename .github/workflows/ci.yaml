@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: bazel build /${{ matrix.dir }}:${{ matrix.name }} (${{ matrix.os }})
+    name: bazel build //${{ matrix.dir }}:${{ matrix.name }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
