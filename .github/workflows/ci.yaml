@@ -10,6 +10,11 @@ env:
   root: \tmp\bazel
 
 jobs:
+  goof: 
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo which bazel
   build:
     name: /${{ matrix.dir }}:${{ matrix.name }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
@@ -29,7 +34,7 @@ jobs:
         with:
           path: |
             bazel-bin
-            bazel-${{ github.event.repository.name }}/**
+          # bazel-${{ github.event.repository.name }}/**
           key: ${{ env.cache-name }}-${{ runner.os }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}
