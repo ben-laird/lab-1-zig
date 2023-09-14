@@ -10,11 +10,6 @@ env:
   root: \tmp\bazel
 
 jobs:
-  goof: 
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: which bazel
   build:
     name: /${{ matrix.dir }}:${{ matrix.name }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
@@ -33,14 +28,13 @@ jobs:
           cache-name: bazel-cache
         with:
           path: |
-            bazel-bin
-          # bazel-${{ github.event.repository.name }}/**
+            .\build
           key: ${{ env.cache-name }}-${{ runner.os }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}
 
       - name: Build code
-        run: bazel build /${{ matrix.dir }}:${{ matrix.name }}
+        run: bazel --output_base .\build build /${{ matrix.dir }}:${{ matrix.name }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
