@@ -3,8 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  test:
-    # virtual environments: https://github.com/actions/virtual-environments
+  build:
     runs-on:
         - ubuntu-latest
         - windows-2022
