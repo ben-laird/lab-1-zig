@@ -7,7 +7,7 @@ on:
     branches: main
 
 env:
-  root: /tmp/bazel
+  root: \tmp\bazel
 
 jobs:
   build:
