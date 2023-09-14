@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: bazel build /${{ matrix.dir }}:${{ matrix.name }} (on ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -35,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ runner.os }}
-          path: bazel-${{ github.repository }}
+          path: bazel-${{ github.event.repository.name }}
