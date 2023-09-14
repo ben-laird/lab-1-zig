@@ -35,6 +35,8 @@ int main()
 
 // Obtaining data definitions
 
+// gh-todo factor out getter logic
+
 double get_loan_amount()
 {
   bool is_valid_number = false;
