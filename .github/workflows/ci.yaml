@@ -24,7 +24,11 @@ jobs:
         env:
           cache-name: bazel-cache
         with:
-          path: ./build
+          path: |
+            ~/.cache/bazelisk
+            ~/.cache/bazel
+            /private/var/tmp/_bazel_runner/
+            %HOME%
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('.bazelrc', '.bazelversion', 'WORKSPACE', 'WORKSPACE.bazel', 'MODULE.bazel') }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}
@@ -36,4 +40,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ runner.os }}
-          path: bazel-${{ github.event.repository.name }}
+          path: |
+            bazel-bin
+            main
