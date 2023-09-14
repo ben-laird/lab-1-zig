@@ -28,13 +28,14 @@ jobs:
           cache-name: bazel-cache
         with:
           path: |
-            ${{ env.root }}
+            bazel-bin
+            bazel-${{ github.event.repository.name }}/**
           key: ${{ env.cache-name }}-${{ runner.os }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}
 
       - name: Build code
-        run: bazel --output_user_root=${{ env.root }} build /${{ matrix.dir }}:${{ matrix.name }}
+        run: bazel build /${{ matrix.dir }}:${{ matrix.name }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
