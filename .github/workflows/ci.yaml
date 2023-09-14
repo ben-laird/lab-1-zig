@@ -6,8 +6,8 @@ jobs:
   test:
     # virtual environments: https://github.com/actions/virtual-environments
     runs-on:
-        - ubuntu-20.04
-        - windows-2019
+        - ubuntu-latest
+        - windows-2022
 
     steps:
       # Caches and restores the bazelisk download directory, the bazel build directory.
@@ -20,13 +20,10 @@ jobs:
             ~/.cache/bazelisk
             ~/.cache/bazel
           key: ${{ runner.os }}-${{ env.cache-name }}
-
-      # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
-      # the rest of the steps
       - uses: actions/checkout@v2
 
       # build
-      - name: Build the code
-        run: bazel build //...
+      - name: Build Code
+        run: bazel build //main:hello-world
       # - name: Run tests
       #   run: bazel test //...
