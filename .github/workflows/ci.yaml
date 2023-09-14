@@ -12,6 +12,8 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
+        dir: [/main]
+        name: [recursion]
 
     steps:
       - uses: actions/checkout@v3
@@ -22,13 +24,15 @@ jobs:
           cache-name: bazel-cache
         with:
           path: ./build
-          key: ${{ env.cache-name }}-${{ runner.os }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('.bazelrc', '.bazelversion', 'WORKSPACE', 'WORKSPACE.bazel', 'MODULE.bazel') }}
+          restore-keys: |
+            ${{ env.cache-name }}-${{ runner.os }}
 
       - name: Build code
-        run: bazel --output_base=./build build //main:recursion
+        run: bazel --output_base=./build build /${{ matrix.dir }}:${{ matrix.name }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ runner.os }}
-          path: bazel-bin
+          path: bazel-${{ github.repository }}
