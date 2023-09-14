@@ -25,10 +25,7 @@ jobs:
           cache-name: bazel-cache
         with:
           path: |
-            ~/.cache/bazelisk
-            ~/.cache/bazel
-            /private/var/tmp/_bazel_runner/
-            %HOME%
+            /home/runner/.cache/bazel
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('.bazelrc', '.bazelversion', 'WORKSPACE', 'WORKSPACE.bazel', 'MODULE.bazel') }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}
