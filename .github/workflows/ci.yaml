@@ -27,7 +27,7 @@ jobs:
           key: ${{ env.cache-name }}-${{ runner.os }}
 
       - name: Build code
-        run: bazel build //main:hello-world
+        run: bazel build //main:recursion
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
