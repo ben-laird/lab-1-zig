@@ -6,18 +6,17 @@ on:
   pull_request:
     branches: main
 
-env:
-  root: \tmp\bazel
-
 jobs:
   build:
     name: bazel build /${{ matrix.dir }}:${{ matrix.name }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest]
-        dir: [/main]
+        dir: [main]
         name: [recursion]
+        include:
+          - os: windows-latest
+            dist_dir: .\dist
 
     steps:
       - uses: actions/checkout@v3
@@ -27,14 +26,13 @@ jobs:
         env:
           cache-name: bazel-cache
         with:
-          path: |
-            .\build
+          path: ${{ matrix.dist_dir }}
           key: ${{ env.cache-name }}-${{ runner.os }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}
 
       - name: Build code
-        run: bazel --output_base .\build build /${{ matrix.dir }}:${{ matrix.name }}
+        run: bazel --output_base ${{ matrix.dist_dir }} build //${{ matrix.dir }}:${{ matrix.name }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
