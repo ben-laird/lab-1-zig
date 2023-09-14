@@ -1,16 +1,21 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+        os: [windows-latest, ubuntu-latest, macos-latest]
 
     steps:
-      # Caches and restores the bazelisk download directory, the bazel build directory.
+      - uses: actions/checkout@v3
+
       - name: Cache bazel
         uses: actions/cache@v3
         env:
@@ -19,15 +24,12 @@ jobs:
           path: |
             ~/.cache/bazelisk
             ~/.cache/bazel
-          key: ${{ runner.os }}-${{ env.cache-name }}
-      - uses: actions/checkout@v3
+          key: ${{ env.cache-name }}-${{ runner.os }}
 
-      # build
-      - name: Build Code
+      - name: Build code
         run: bazel build //main:hello-world
-      # - name: Run tests
-      #   run: bazel test //...
-      - name: Archive build artifact
+        
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ runner.os }}
