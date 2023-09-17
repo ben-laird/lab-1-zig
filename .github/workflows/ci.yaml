@@ -21,6 +21,10 @@ jobs:
         include:
           - os: windows-latest
             out_dir: .\dist
+          - os: ubuntu-latest
+            out_dir: ./dist
+          - os: macos-latest
+            out_dir: ./dist
     env:
       project: //${{ matrix.dir }}:${{ matrix.name }}
       

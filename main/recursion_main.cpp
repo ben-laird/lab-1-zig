@@ -3,6 +3,8 @@
 #include <regex>
 #include <iomanip>
 
+void clear_screen();
+
 // Obtaining data
 
 double get_loan_amount();
@@ -37,6 +39,19 @@ int main()
 
 // gh-todo factor out getter logic
 
+void clear_screen()
+{
+  static std::string os = std::getenv("OS");
+
+  if (os == "mac" || os == "windows")
+  {
+    if (os == "mac")
+      system("clear");
+    else
+      system("cls");
+  }
+}
+
 double get_loan_amount()
 {
   bool is_valid_number = false;
@@ -48,7 +63,7 @@ double get_loan_amount()
 
   while (!is_valid_number)
   {
-    system("clear");
+    clear_screen();
 
     std::cout << "Enter a loan amount from 1 to 1,000,000: ";
     std::cin >> input;
@@ -98,10 +113,10 @@ int get_term()
         is_valid_number = true;
       }
       else
-        std::cout << "Please enter a valid term: 5, 10, or 15 years";
+        std::cout << "Please enter a valid term: 5, 10, or 15 years" << std::endl;
     }
     else
-      std::cout << "Please enter a number for the term";
+      std::cout << "Please enter a number for the term" << std::endl;
   }
 
   return result;
@@ -118,9 +133,9 @@ double get_interest_rate()
 
   while (!is_valid_number)
   {
-    system("clear");
+    clear_screen();
 
-    std::cout << "Enter an annual interest rate from 1\% to 1,000\%: ";
+    std::cout << "Enter an annual interest rate from 1% to 1,000%: ";
     std::cin >> input;
 
     is_number = regex_match(input, std::regex("[0-9]+"));
@@ -139,7 +154,7 @@ double get_interest_rate()
       std::cout << "Please enter a valid number for the annual interest rate";
   }
 
-  return result / 1000;
+  return result / 100;
 }
 
 // Meat & potatoes definitions
@@ -164,9 +179,12 @@ void show_output(int &month_count, double &loan_amount, int &term, double &inter
 
 void report_header(double &loan_amount, int &term, double &interest_rate)
 {
-  std::cout << "Loan Amount: " << loan_amount << std::endl;
-  std::cout << "Term: " << term << " Years" << std::endl;
-  std::cout << "Interest Rate: " << interest_rate << "\%" << std::endl;
+  std::cout << "Loan Amount: $" << loan_amount << std::endl
+            << std::endl;
+  std::cout << "Term: " << term << " Years" << std::endl
+            << std::endl;
+  std::cout << "Interest Rate: " << interest_rate * 100 << "%" << std::endl
+            << std::endl;
 }
 
 void column_header()
@@ -191,7 +209,7 @@ void details(int &month_count, double &loan_amount, int &term, double &interest_
   double annual_interest = interest_rate / 12;
   int annual_term = term * 12;
 
-  for (int month_count = 1; month_count <= annual_term; month_count++)
+  // for (int month_count = 1; month_count <= annual_term; month_count++)
   {
     double interest = balance * annual_interest;
     double principal = payment - interest;
@@ -209,9 +227,7 @@ void details(int &month_count, double &loan_amount, int &term, double &interest_
   month_count++;
 
   if (month_count <= annual_term)
-  {
     details(month_count, balance, term, interest_rate, payment);
-  }
 
   return;
 }
