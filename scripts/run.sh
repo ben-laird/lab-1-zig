@@ -1,3 +1,3 @@
-./build.sh
+./scripts/build.sh $1 $2
 
-./build/lab-1-build
+"./$1/$2"
