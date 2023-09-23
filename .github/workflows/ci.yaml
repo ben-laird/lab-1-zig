@@ -19,16 +19,19 @@ jobs:
         out_dir: [dist]
         include:
           - os: windows-latest
-            name: bin.exe
+            name: "bin.exe"
           - os: ubuntu-latest
             name: bin
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout branch
+        uses: actions/checkout@v3
 
-      - uses: goto-bus-stop/setup-zig@v2
+      - name: Set up Zig
+        uses: goto-bus-stop/setup-zig@v2
 
-      - uses: actions/cache@v3
+      - name: Restore or create cache
+        uses: actions/cache@v3
         env:
           cache-key: ${{ env.cache-name }}-${{ runner.os }}
         with:
@@ -39,7 +42,8 @@ jobs:
       - name: Build code
         run: scripts/build.sh ${{ matrix.out_dir }} ${{ matrix.name }}
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload build
+        uses: actions/upload-artifact@v3
         with:
           name: build-${{ runner.os }}
           path: |
