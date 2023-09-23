@@ -16,10 +16,10 @@ jobs:
 
     strategy:
       matrix:
-        out_dir: [dist]
+        out_dir: [./dist]
         include:
           - os: windows-latest
-            name: "bin.exe"
+            name: bin.exe
           - os: ubuntu-latest
             name: bin
 
