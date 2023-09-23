@@ -40,7 +40,7 @@ jobs:
           restore-keys: ${{ env.cache-key }}
 
       - name: Build code
-        run: scripts/build.sh ${{ matrix.out_dir }} ${{ matrix.name }}
+        run: scripts/build.sh "${{ matrix.out_dir }}" "${{ matrix.name }}"
 
       - name: Upload build
         uses: actions/upload-artifact@v3
