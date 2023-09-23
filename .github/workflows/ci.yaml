@@ -19,9 +19,9 @@ jobs:
         out_dir: [./dist]
         include:
           - os: windows-latest
-            name: bin.exe
+            name: main
           - os: ubuntu-latest
-            name: bin
+            name: main
 
     steps:
       - name: Checkout branch
