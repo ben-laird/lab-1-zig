@@ -3,7 +3,7 @@
 #include <regex>
 #include <iomanip>
 
-void clear_screen();
+// void clear_screen();
 
 // Obtaining data
 
@@ -39,18 +39,18 @@ int main()
 
 // gh-todo factor out getter logic
 
-void clear_screen()
-{
-  static std::string os = std::getenv("OS");
+// void clear_screen()
+// {
+//   static std::string os = std::getenv("OS");
 
-  if (os == "mac" || os == "windows")
-  {
-    if (os == "mac")
-      system("clear");
-    else
-      system("cls");
-  }
-}
+//   if (os == "mac" || os == "windows")
+//   {
+//     if (os == "mac")
+//       system("clear");
+//     else
+//       system("cls");
+//   }
+// }
 
 double get_loan_amount()
 {
@@ -63,7 +63,7 @@ double get_loan_amount()
 
   while (!is_valid_number)
   {
-    clear_screen();
+    system("clear"); // clear_screen();
 
     std::cout << "Enter a loan amount from 1 to 1,000,000: ";
     std::cin >> input;
@@ -133,7 +133,7 @@ double get_interest_rate()
 
   while (!is_valid_number)
   {
-    clear_screen();
+    system("clear"); // clear_screen();
 
     std::cout << "Enter an annual interest rate from 1% to 1,000%: ";
     std::cin >> input;
