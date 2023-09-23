@@ -16,13 +16,9 @@ jobs:
 
     strategy:
       matrix:
-        include:
-          - os: windows-latest
-            out_path: .\dist\bin
-          - os: ubuntu-latest
-            out_path: ./dist/bin
-          - os: macos-latest
-            out_path: ./dist/bin
+        out_dir: [dist]
+        name: [bin]
+        os: [windows-latest, ubuntu-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -33,16 +29,16 @@ jobs:
         env:
           cache-key: ${{ env.cache-name }}-${{ runner.os }}
         with:
-          path: ${{ matrix.out_path }}
+          path: ${{ matrix.out_dir }}
           key: ${{ env.cache-key }}
           restore-keys: ${{ env.cache-key }}
 
       - name: Build code
-        run: scripts/build.sh ${{ matrix.out_path }}
+        run: scripts/build.sh ${{ matrix.out_dir }} ${{ matrix.name }}
 
       - uses: actions/upload-artifact@v3
         with:
           name: build-${{ runner.os }}
           path: |
             src
-            build
+            ${{ matrix.out_dir }}
