@@ -40,5 +40,6 @@ jobs:
         with:
           name: build-${{ runner.os }}
           path: |
-            src
-            ${{ matrix.out_dir }}
+            src/
+            ${{ matrix.out_dir }}/
+            README.md
