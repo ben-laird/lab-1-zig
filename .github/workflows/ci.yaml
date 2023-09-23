@@ -17,8 +17,11 @@ jobs:
     strategy:
       matrix:
         out_dir: [dist]
-        name: [bin]
-        os: [windows-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            name: bin.exe
+          - os: ubuntu-latest
+            name: bin
 
     steps:
       - uses: actions/checkout@v3
