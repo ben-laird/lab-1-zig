@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        out_dir: [./dist]
+        out_dir: [./dist] # iss-BUG #1 CI doesn't spin up Windows instance despite being included in matrix
         include:
           - os: windows-latest
             name: main
